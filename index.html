@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Kho BTHT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4e79">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kho BTHT">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  html, body { margin: 0; height: 100%; background: #eef2f6; overflow: hidden; }
+  body { padding-top: env(safe-area-inset-top); box-sizing: border-box; background: #1f4e79; }
+  iframe { border: 0; width: 100%; height: 100%; display: block; background: #eef2f6; }
+  #cho, #loi {
+    position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #1f4e79; color: #fff; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    text-align: center; padding: 24px; box-sizing: border-box; gap: 14px; z-index: 2;
+  }
+  #cho img { width: 96px; height: 96px; border-radius: 22px; }
+  .quay { width: 34px; height: 34px; border: 4px solid rgba(255,255,255,.3); border-top-color: #fff;
+    border-radius: 50%; animation: q 0.9s linear infinite; }
+  @keyframes q { to { transform: rotate(360deg); } }
+  #loi { display: none; }
+  #loi button { font-size: 16px; padding: 12px 22px; border: 0; border-radius: 8px; background: #fff;
+    color: #1f4e79; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="cho">
+  <img src="icon-192.png" alt="">
+  <b style="font-size:20px">Kho vật tư BTHT</b>
+  <div class="quay"></div>
+</div>
+<div id="loi">
+  <b style="font-size:18px">Không có kết nối mạng</b>
+  <span>App cần mạng để đọc và ghi dữ liệu kho.</span>
+  <button onclick="location.reload()">Thử lại</button>
+</div>
+
+<script>
+  // ===== CHỈ CẦN SỬA DÒNG NÀY: dán link Web App (đuôi /exec) =====
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbyVggObdnUO3EGB2wtdSRjLkoyCokp78VDH51fVk9-Ad3xXYxUVIaRnKKhX0-O8aOz0/exec';
+  // ================================================================
+
+  // Giữ tham số ?ma=... (quét tem QR) để mở thẳng vật tư
+  const ma = new URLSearchParams(location.search).get('ma');
+  const src = APP_URL + (ma ? '?ma=' + encodeURIComponent(ma) : '');
+
+  if (!navigator.onLine) {
+    document.getElementById('cho').style.display = 'none';
+    document.getElementById('loi').style.display = 'flex';
+  } else {
+    const f = document.createElement('iframe');
+    f.src = src;
+    f.title = 'Kho vật tư BTHT';
+    f.allow = 'camera; clipboard-write';
+    f.onload = () => setTimeout(() => document.getElementById('cho').style.display = 'none', 300);
+    document.body.appendChild(f);
+    // Dự phòng: ẩn màn hình chờ sau 12 giây dù trang chưa báo tải xong
+    setTimeout(() => document.getElementById('cho').style.display = 'none', 12000);
+  }
+  window.addEventListener('offline', () => document.getElementById('loi').style.display = 'flex');
+  window.addEventListener('online', () => location.reload());
+
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
