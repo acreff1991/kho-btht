@@ -1,7 +1,7 @@
 {
-  "name": "Kho vật tư BTHT",
-  "short_name": "Kho BTHT",
-  "description": "Xuất, nhập, tra cứu vật tư và lập phiếu Đội BTHT",
+  "name": "Kho vật tư Phòng KTHT",
+  "short_name": "Kho KTHT",
+  "description": "Xuất, nhập, tra cứu vật tư và lập phiếu Phòng Kỹ thuật Hạ tầng",
   "lang": "vi",
   "start_url": "./",
   "scope": "./",

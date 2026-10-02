@@ -2,12 +2,12 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<title>Kho BTHT</title>
+<title>Kho KTHT</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1f4e79">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Kho BTHT">
+<meta name="apple-mobile-web-app-title" content="Kho KTHT">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -32,7 +32,7 @@
 <body>
 <div id="cho">
   <img src="icon-192.png" alt="">
-  <b style="font-size:20px">Kho vật tư BTHT</b>
+  <b style="font-size:20px">Kho vật tư Phòng KTHT</b>
   <div class="quay"></div>
 </div>
 <div id="loi">
@@ -43,7 +43,7 @@
 
 <script>
   // ===== CHỈ CẦN SỬA DÒNG NÀY: dán link Web App (đuôi /exec) =====
-  const APP_URL = 'https://script.google.com/macros/s/AKfycbyVggObdnUO3EGB2wtdSRjLkoyCokp78VDH51fVk9-Ad3xXYxUVIaRnKKhX0-O8aOz0/exec';
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbyWy1L3xO7i4uOfcdJRQi3TbXp6MKTR8YXgt9ER-Dv-9QZEzUxfFF2v-fd5lXea_h7B/exec';
   // ================================================================
 
   // Giữ tham số ?ma=... (quét tem QR) để mở thẳng vật tư
@@ -56,7 +56,7 @@
   } else {
     const f = document.createElement('iframe');
     f.src = src;
-    f.title = 'Kho vật tư BTHT';
+    f.title = 'Kho vật tư Phòng KTHT';
     f.allow = 'camera; clipboard-write';
     f.onload = () => setTimeout(() => document.getElementById('cho').style.display = 'none', 300);
     document.body.appendChild(f);
