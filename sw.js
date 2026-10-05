@@ -1,5 +1,5 @@
 // Lưu sẵn "vỏ app" để mở nhanh; dữ liệu kho luôn lấy trực tiếp từ máy chủ
-const BAN = 'kho-ktht-v2';
+const BAN = 'kho-ktht-v3';
 const VO_APP = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
