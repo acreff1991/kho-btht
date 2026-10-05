@@ -32,7 +32,7 @@
 <body>
 <div id="cho">
   <img src="icon-192.png" alt="">
-  <b style="font-size:20px">Kho vật tư Phòng KTHT</b>
+  <b style="font-size:20px">Kho vật tư KTHT</b>
   <div class="quay"></div>
 </div>
 <div id="loi">
@@ -43,7 +43,7 @@
 
 <script>
   // ===== CHỈ CẦN SỬA DÒNG NÀY: dán link Web App (đuôi /exec) =====
-  const APP_URL = 'https://script.google.com/macros/s/AKfycbyWy1L3xO7i4uOfcdJRQi3TbXp6MKTR8YXgt9ER-Dv-9QZEzUxfFF2v-fd5lXea_h7B/exec';
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbyVggObdnUO3EGB2wtdSRjLkoyCokp78VDH51fVk9-Ad3xXYxUVIaRnKKhX0-O8aOz0/exec';
   // ================================================================
 
   // Giữ tham số ?ma=... (quét tem QR) để mở thẳng vật tư
@@ -56,7 +56,7 @@
   } else {
     const f = document.createElement('iframe');
     f.src = src;
-    f.title = 'Kho vật tư Phòng KTHT';
+    f.title = 'Kho vật tư KTHT';
     f.allow = 'camera; clipboard-write';
     f.onload = () => setTimeout(() => document.getElementById('cho').style.display = 'none', 300);
     document.body.appendChild(f);
@@ -65,6 +65,23 @@
   }
   window.addEventListener('offline', () => document.getElementById('loi').style.display = 'flex');
   window.addEventListener('online', () => location.reload());
+
+  // ===== Giữ phiên đăng nhập cho app bên trong (để không phải nhập lại mã OTP) =====
+  // Chỉ trao đổi với trang của Google Apps Script (*.googleusercontent.com)
+  const KHOA = 'kho_ktht_phien';
+  window.addEventListener('message', e => {
+    let host = '';
+    try { host = new URL(e.origin).hostname; } catch (x) { return; }
+    if (!/\.googleusercontent\.com$/.test(host)) return;
+    const d = e.data || {};
+    if (d.kho !== 1) return;
+    try {
+      if (d.lenh === 'lay') e.source.postMessage({ kho: 1, lenh: 'tra', auth: JSON.parse(localStorage.getItem(KHOA) || 'null') }, e.origin);
+      else if (d.lenh === 'luu' && d.auth) localStorage.setItem(KHOA, JSON.stringify(d.auth));
+      else if (d.lenh === 'xoa') localStorage.removeItem(KHOA);
+    } catch (x) { /* trình duyệt chặn bộ nhớ: bỏ qua */ }
+  });
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (x) {}
 
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
