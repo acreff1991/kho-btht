@@ -43,12 +43,14 @@
 
 <script>
   // ===== CHỈ CẦN SỬA DÒNG NÀY: dán link Web App (đuôi /exec) =====
-  const APP_URL = 'https://script.google.com/macros/s/AKfycbyWy1L3xO7i4uOfcdJRQi3TbXp6MKTR8YXgt9ER-Dv-9QZEzUxfFF2v-fd5lXea_h7B/exec';
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbyVggObdnUO3EGB2wtdSRjLkoyCokp78VDH51fVk9-Ad3xXYxUVIaRnKKhX0-O8aOz0/exec';
   // ================================================================
 
-  // Giữ tham số ?ma=... (quét tem QR) để mở thẳng vật tư
+  // ?t=... : mỗi lần mở app là 1 link khác nhau -> trình duyệt không dùng lại trang cũ trong bộ nhớ đệm
+  //          (sau khi triển khai phiên bản mới trên Apps Script, app luôn nhận bản mới). Máy chủ bỏ qua tham số này.
+  // ?ma=... : giữ mã vật tư từ tem QR để mở thẳng vật tư
   const ma = new URLSearchParams(location.search).get('ma');
-  const src = APP_URL + (ma ? '?ma=' + encodeURIComponent(ma) : '');
+  const src = APP_URL + '?t=' + Date.now() + (ma ? '&ma=' + encodeURIComponent(ma) : '');
 
   if (!navigator.onLine) {
     document.getElementById('cho').style.display = 'none';
